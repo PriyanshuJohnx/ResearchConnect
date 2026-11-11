@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ResearchConnect | Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        :root {
+            --primary: #5146e5;
+            --primary-dark: #3930b8;
+            --secondary: #7667f5;
+            --background: #f5f6fc;
+            --white: #ffffff;
+            --text: #20233a;
+            --muted: #858ba3;
+            --border: #eceefa;
+            --shadow: 0 8px 30px rgba(43, 48, 95, 0.07);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        button, input, textarea {
+            font-family: inherit;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 255px;
+            height: 100vh;
+            background: var(--white);
+            padding: 30px 20px;
+            border-right: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px;
+            margin-bottom: 50px;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #5146e5, #9487ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .brand h2 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+        }
+
+        .brand h2 span {
+            color: var(--primary);
+        }
+
+        .menu-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #a5a9bd;
+            letter-spacing: 1.3px;
+            padding: 0 12px;
+            margin-bottom: 15px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 9px;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 13px;
+            color: #777e98;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .nav-menu a i {
+            width: 19px;
+            font-size: 16px;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #efedff;
+            color: var(--primary);
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            right: 20px;
+        }
+
+        .help-card {
+            background: linear-gradient(135deg, #5146e5, #8173ff);
+            border-radius: 14px;
+            padding: 19px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .help-card i {
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .help-card h4 {
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .help-card p {
+            font-size: 11px;
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        .logout-btn {
+            width: 100%;
+            background: #fff0f0;
+            color: #e05252;
+            border: none;
+            padding: 13px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ffe0e0;
+        }
+
+        /* MAIN CONTENT */
+
+        .main-content {
+            margin-left: 255px;
+            padding: 30px 40px;
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar-left h3 {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .topbar-left p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 9px 15px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e9e6ff;
+            color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-info h4 {
+            font-size: 12px;
+        }
+
+        .profile-info p {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        /* HERO */
+
+        .hero {
+            background: linear-gradient(115deg, #5146e5, #8173ff);
+            border-radius: 20px;
+            padding: 38px 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 30px rgba(81, 70, 229, 0.18);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            right: 70px;
+            top: -120px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            right: -40px;
+            bottom: -130px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.17);
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 17px;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            line-height: 1.35;
+            margin-bottom: 12px;
+            letter-spacing: -0.8px;
+        }
+
+        .hero p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.85);
+            max-width: 540px;
+        }
+
+        .hero-icon {
+            position: relative;
+            z-index: 2;
+            font-size: 90px;
+            opacity: 0.9;
+            margin-right: 35px;
+        }
+
+        /* SECTION HEADINGS */
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 17px;
+        }
+
+        .section-heading h2 {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        /* FEATURE CARDS */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 23px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 13px 30px rgba(43, 48, 95, 0.1);
+        }
+
+        .feature-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 17px;
+        }
+
+        .purple {
+            background: #efedff;
+            color: #6255e9;
+        }
+
+        .blue {
+            background: #e8f3ff;
+            color: #3988e8;
+        }
+
+        .green {
+            background: #e4f9f0;
+            color: #24a477;
+        }
+
+        .feature-card h3 {
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* CONTENT PANELS */
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            padding: 27px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            scroll-margin-top: 25px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 9px;
+        }
+
+        .panel-header .feature-icon {
+            margin-bottom: 0;
+        }
+
+        .panel-header h2 {
+            font-size: 17px;
+        }
+
+        .panel-description {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f8f8ff;
+            border: 1px solid #e9e9f5;
+            border-radius: 10px;
+            padding: 6px;
+            gap: 10px;
+        }
+
+        .search-box i {
+            color: #999db2;
+            margin-left: 12px;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 12px 5px;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .search-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 19px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .search-box button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* BUTTONS */
+
+        .primary-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .summarize-paper-btn {
+            margin-top: 13px;
+            background: #5146e5;
+            color: white;
+            border: none;
+            padding: 11px 15px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .summarize-paper-btn:hover {
+            background: #3930b8;
+        }
+
+        /* INPUTS */
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #e5e7f0;
+            border-radius: 9px;
+            outline: none;
+            background: #fafaff;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        /* RESULTS */
+
+        .results {
+            margin-top: 25px;
+        }
+
+        .results h3 {
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .result-card {
+            background: #fbfbff;
+            border: 1px solid #ededf8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 14px;
+            transition: 0.25s;
+        }
+
+        .result-card:hover {
+            border-color: #c9c4ff;
+            box-shadow: 0 5px 18px rgba(81, 70, 229, 0.06);
+        }
+
+        .result-card h4 {
+            color: #3731a8;
+            font-size: 14px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .result-card p {
+            color: #777e98;
+            font-size: 11px;
+            line-height: 1.8;
+            margin-bottom: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .result-card strong {
+            color: #444961;
+        }
+
+        .paper-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 12px;
+            background: #efedff;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 9px 13px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .paper-link:hover {
+            background: #dfdcff;
+        }
+
+        /* MATCH BADGE */
+
+        .match {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e3f8ef;
+            color: #16875b;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* SUMMARY */
+
+        .summary-box {
+            background: #f7f6ff;
+            border-left: 4px solid var(--primary);
+            padding: 22px;
+            margin-top: 20px;
+            border-radius: 10px;
+            line-height: 1.9;
+            color: #555b76;
+            font-size: 12px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .summary-box h3 {
+            color: var(--primary);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .summary-paper-title {
+            font-weight: 700;
+            color: #3731a8;
+            margin-bottom: 14px;
+        }
+
+        /* MESSAGES */
+
+        .message {
+            margin-top: 16px;
+            padding: 13px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .error {
+            display: block;
+            background: #fff0f0;
+            color: #c43e3e;
+        }
+
+        .success {
+            display: block;
+            background: #e8f9ef;
+            color: #16875b;
+        }
+
+        .loading {
+            color: var(--muted);
+            font-size: 12px;
+            padding: 15px 0;
+        }
+
+        /* EMPTY STATES */
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 15px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 30px;
+            color: #b9b4ef;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 12px;
+        }
+
+        /* ABOUT */
+
+        .about-panel {
+            background: linear-gradient(120deg, #eeedff, #f5f3ff);
+            border: none;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .about-panel h3 {
+            color: #443bbd;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .about-panel p {
+            color: #77739f;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            color: #a0a4b7;
+            font-size: 11px;
+            padding: 20px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1100px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-icon {
+                font-size: 65px;
+                margin-right: 10px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 75px;
+                padding: 25px 10px;
+            }
+
+            .brand {
+                justify-content: center;
+                padding: 0;
+                margin-bottom: 45px;
+            }
+
+            .brand h2,
+            .menu-label,
+            .nav-menu a span,
+            .help-card,
+            .sidebar-bottom .logout-text {
+                display: none;
+            }
+
+            .nav-menu a {
+                justify-content: center;
+                padding: 15px 5px;
+            }
+
+            .nav-menu a i {
+                font-size: 18px;
+            }
+
+            .sidebar-bottom {
+                left: 10px;
+                right: 10px;
+            }
+
+            .logout-btn {
+                font-size: 16px;
+            }
+
+            .main-content {
+                margin-left: 75px;
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-content {
+                padding: 20px 13px;
+            }
+
+            .hero {
+                padding: 27px 22px;
+            }
+
+            .hero h1 {
+                font-size: 22px;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .search-box {
+                flex-wrap: wrap;
+            }
+
+            .search-box button {
+                width: 100%;
+            }
+
+            .panel {
+                padding: 19px;
+            }
+
+            .topbar-left h3 {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+
+            <h2>Research<span>Connect</span></h2>
+
+        </div>
+
+        <p class="menu-label">MAIN MENU</p>
+
+        <ul class="nav-menu">
+
+            <li>
+                <a href="#home" class="active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#explore">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Explore Papers</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#collaborators">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Collaborators</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#summarization">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Paper Summary</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="sidebar-bottom">
+
+            <div class="help-card">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                <h4>Research Smarter</h4>
+
+                <p>
+                    Discover new publications and connect with researchers
+                    who share your academic interests.
+                </p>
+
+            </div>
+
+            <button class="logout-btn" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="logout-text"> &nbsp; Logout</span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content" id="home">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div class="topbar-left">
+
+                <h3>Research Workspace</h3>
+
+                <p>Explore. Discover. Collaborate.</p>
+
+            </div>
+
+            <div class="profile">
+
+                <div class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="profile-info">
+
+                    <h4>Researcher</h4>
+
+                    <p>Academic Workspace</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="hero-tag">
+                    YOUR RESEARCH JOURNEY STARTS HERE
+                </span>
+
+                <h1>Welcome to ResearchConnect</h1>
+
+                <p>
+                    Your intelligent research workspace to explore academic
+                    publications, discover potential collaborators, and
+                    gain valuable insights from research papers.
+                </p>
+
+            </div>
+
+            <div class="hero-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Explore Your Workspace</h2>
+                <p>Everything you need for your research journey.</p>
+            </div>
+
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <div class="feature-icon purple">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+
+                <h3>Research Discovery</h3>
+
+                <p>
+                    Explore academic publications and discover
+                    research related to your interests.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon blue">
+                    <i class="fa-solid fa-user-group"></i>
+                </div>
+
+                <h3>Find Collaborators</h3>
+
+                <p>
+                    Discover researchers with similar academic
+                    interests and collaboration opportunities.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                </div>
+
+                <h3>Paper Summarization</h3>
+
+                <p>
+                    Get AI-generated summaries of research papers
+                    and understand their important insights.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAPER SEARCH -->
+
+        <section class="panel" id="explore">
+
+            <div class="panel-header">
+
+                <div class="feature-icon purple">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+
+                <h2>Explore Research Papers</h2>
+
+            </div>
+
+            <p class="panel-description">
+                Search for academic publications using research
+                topics, keywords, or areas of interest.
+            </p>
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-search"></i>
+
+                <input
+                    type="text"
+                    id="paperQuery"
+                    placeholder="Try Artificial Intelligence, Machine Learning, Healthcare..."
+                >
+
+                <button onclick="searchPapers()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Search Papers
+                </button>
+
+            </div>
+
+            <div id="paperMessage" class="message"></div>
+
+            <div id="paperResults" class="results"></div>
+
+        </section>
+
+
+        <!-- COLLABORATORS -->
+
+        <section class="panel" id="collaborators">
+
+            <div class="panel-header">
+
+                <div class="feature-icon blue">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <h2>Research Collaborators</h2>
+
+            </div>
+
+            <p class="panel-description">
+                Find researchers who share similar research interests
+                and discover opportunities to work together.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="getCollaboratorRecommendations()">
+
+                <i class="fa-solid fa-user-plus"></i>
+                &nbsp; Find Collaborators
+
+            </button>
+
+            <div id="collaboratorMessage" class="message"></div>
+
+            <div id="collaboratorResults" class="results"></div>
+
+        </section>
+
+
+        <!-- AI SUMMARIZATION -->
+
+        <section class="panel" id="summarization">
+
+            <div class="panel-header">
+
+                <div class="feature-icon green">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <h2>AI Research Paper Summarization</h2>
+
+            </div>
+
+            <p class="panel-description">
+                Generate an intelligent academic summary.
+                Select a paper from Explore Papers or enter its details manually.
+            </p>
+
+            <div class="input-group">
+
+                <label for="summaryTitle">
+                    Research Paper Title
+                </label>
+
+                <input
+                    type="text"
+                    id="summaryTitle"
+                    placeholder="Enter research paper title"
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label for="summaryAbstract">
+                    Research Paper Abstract
+                </label>
+
+                <textarea
+                    id="summaryAbstract"
+                    placeholder="Paste the research paper abstract here..."
+                    rows="7"
+                ></textarea>
+
+            </div>
+
+            <button class="primary-btn"
+                    id="generateSummaryButton"
+                    onclick="summarizePaper()">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                &nbsp; Generate AI Summary
+
+            </button>
+
+            <div id="summaryMessage" class="message"></div>
+
+            <div id="summaryResults"></div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section class="about-panel">
+
+            <h3>
+                <i class="fa-solid fa-lightbulb"></i>
+                &nbsp; About ResearchConnect
+            </h3>
+
+            <p>
+                ResearchConnect is a research collaboration and
+                publication recommendation platform designed to help
+                researchers explore academic publications, discover
+                potential collaborators, and access meaningful
+                research insights.
+            </p>
+
+        </section>
+
+
+        <footer>
+            © 2026 ResearchConnect. All rights reserved.
+        </footer>
+
+    </main>
+
+
+    <script>
+
+        // STORE SEARCHED PAPERS
+        // This prevents paper titles and abstracts from breaking HTML buttons.
+
+        let currentSearchPapers = [];
+
+
+        // HTML SECURITY
+
+        function escapeHTML(value) {
+
+            return String(value ?? "").replace(/[&<>"']/g, function(char) {
+
+                const entities = {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#039;"
+                };
+
+                return entities[char];
+
+            });
+
+        }
+
+
+        // MESSAGES
+
+        function showMessage(elementId, message, type) {
+
+            const element = document.getElementById(elementId);
+
+            element.className = "message " + type;
+
+            element.textContent = message;
+
+        }
+
+
+        function clearMessage(elementId) {
+
+            const element = document.getElementById(elementId);
+
+            element.className = "message";
+
+            element.textContent = "";
+
+        }
+
+
+        // PAPER LINK VALIDATION
+
+        function safePaperLink(url) {
+
+            if (!url) return "";
+
+            try {
+
+                const parsedURL = new URL(url);
+
+                if (
+                    parsedURL.protocol === "https:" ||
+                    parsedURL.protocol === "http:"
+                ) {
+
+                    return parsedURL.href;
+
+                }
+
+                return "";
+
+            } catch {
+
+                return "";
+
+            }
+
+        }
+
+
+        // SELECT PAPER FOR SUMMARIZATION
+        // FIXED: Select paper using its index instead of passing
+        // the complete title and abstract inside an HTML onclick attribute.
+
+        function selectPaperForSummary(index) {
+
+            const paper = currentSearchPapers[index];
+
+            if (!paper) {
+
+                alert("Unable to select this research paper. Please search again.");
+
+                return;
+
+            }
+
+            const title = paper.title || "Untitled Research Paper";
+
+            const abstract = paper.abstract || "";
+
+            if (!abstract.trim()) {
+
+                alert("An abstract is not available for this paper.");
+
+                return;
+
+            }
+
+            document.getElementById("summaryTitle").value = title;
+
+            document.getElementById("summaryAbstract").value = abstract;
+
+            document.getElementById("summaryResults").innerHTML = "";
+
+            clearMessage("summaryMessage");
+
+            document.getElementById("summarization").scrollIntoView({
+                behavior: "smooth"
+            });
+
+            showMessage(
+                "summaryMessage",
+                "Paper selected successfully! Click Generate AI Summary to continue.",
+                "success"
+            );
+
+        }
+
+
+        // SEARCH RESEARCH PAPERS
+
+        async function searchPapers() {
+
+            const query =
+                document.getElementById("paperQuery").value.trim();
+
+            const resultsDiv =
+                document.getElementById("paperResults");
+
+            clearMessage("paperMessage");
+
+            resultsDiv.innerHTML = "";
+
+            currentSearchPapers = [];
+
+            if (!query) {
+
+                showMessage(
+                    "paperMessage",
+                    "Please enter a research topic or keyword.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            resultsDiv.innerHTML =
+                '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Searching for research papers...</p>';
+
+            try {
+
+                const response = await fetch(
+                    `/search/papers?query=${encodeURIComponent(query)}`,
+                    {
+                        method: "GET",
+                        credentials: "same-origin"
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail || "Unable to search research papers."
+                    );
+
+                }
+
+                const papers = data.papers || [];
+
+                // Save the papers so the summary buttons can access them.
+
+                currentSearchPapers = papers;
+
+                if (papers.length === 0) {
+
+                    resultsDiv.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fa-solid fa-book-open"></i>
+                            <p>No research papers found. Try another keyword.</p>
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+                let html = `
+
+                    <h3>
+                        <i class="fa-solid fa-book"></i>
+                        &nbsp; Research Paper Search Results
+                    </h3>
+
+                    <p style="font-size:11px;color:#858ba3;margin-bottom:15px;">
+                        Search: ${escapeHTML(data.search_query || query)}
+                        &nbsp; | &nbsp;
+                        Results: ${papers.length}
+                    </p>
+
+                `;
+
+                papers.forEach(function(paper, index) {
+
+                    const title =
+                        escapeHTML(paper.title || "Untitled Paper");
+
+                    const authors =
+                        escapeHTML(paper.authors || "Not available");
+
+                    const abstractText =
+                        paper.abstract || "";
+
+                    const abstract =
+                        escapeHTML(
+                            abstractText || "Abstract not available."
+                        );
+
+                    const year =
+                        escapeHTML(
+                            paper.publication_year || "Not available"
+                        );
+
+                    const link =
+                        safePaperLink(paper.paper_link);
+
+                    // FIXED BUTTON: only the paper index is passed.
+
+                    const summarizeButton = abstractText.trim()
+                        ? `
+                            <button
+                                type="button"
+                                class="summarize-paper-btn"
+                                onclick="selectPaperForSummary(${index})">
+
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                &nbsp; Summarize This Paper
+
+                            </button>
+                        `
+                        : `
+                            <p style="margin-top:12px;">
+                                <i class="fa-solid fa-circle-info"></i>
+                                Abstract unavailable for summarization.
+                            </p>
+                        `;
+
+                    html += `
+
+                        <div class="result-card">
+
+                            <h4>${title}</h4>
+
+                            <p>
+                                <strong>
+                                    <i class="fa-solid fa-user-pen"></i>
+                                    Authors:
+                                </strong>
+                                ${authors}
+                            </p>
+
+                            <p>
+                                <strong>
+                                    <i class="fa-solid fa-calendar"></i>
+                                    Publication Year:
+                                </strong>
+                                ${year}
+                            </p>
+
+                            <p>
+                                <strong>Abstract:</strong>
+                                ${abstract}
+                            </p>
+
+                            ${
+                                link
+                                ? `
+                                    <a class="paper-link"
+                                       href="${escapeHTML(link)}"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        Read Research Paper
+
+                                    </a>
+                                `
+                                : `
+                                    <p>Research paper link not available.</p>
+                                `
+                            }
+
+                            ${summarizeButton}
+
+                        </div>
+
+                    `;
+
+                });
+
+                resultsDiv.innerHTML = html;
+
+            } catch(error) {
+
+                currentSearchPapers = [];
+
+                resultsDiv.innerHTML = "";
+
+                showMessage(
+                    "paperMessage",
+                    error.message || "Something went wrong.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // COLLABORATOR RECOMMENDATIONS
+
+        async function getCollaboratorRecommendations() {
+
+            const resultsDiv =
+                document.getElementById("collaboratorResults");
+
+            clearMessage("collaboratorMessage");
+
+            resultsDiv.innerHTML = `
+                <p class="loading">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    Finding potential collaborators...
+                </p>
+            `;
+
+            try {
+
+                const response = await fetch(
+                    "/recommendations/collaborators",
+                    {
+                        method: "GET",
+                        credentials: "same-origin"
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail || "Unable to find collaborators."
+                    );
+
+                }
+
+                const recommendations = data.recommendations || [];
+
+                if (recommendations.length === 0) {
+
+                    resultsDiv.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fa-solid fa-users"></i>
+                            <p>No potential collaborators found.</p>
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+                let html = `
+
+                    <h3>
+                        <i class="fa-solid fa-user-group"></i>
+                        &nbsp; Recommended Researchers
+                    </h3>
+
+                `;
+
+                recommendations.forEach(function(person) {
+
+                    const name =
+                        escapeHTML(person.name || "Researcher");
+
+                    const email =
+                        escapeHTML(person.email || "Not available");
+
+                    const interests =
+                        escapeHTML(
+                            person.research_interests || "Not specified"
+                        );
+
+                    const percentage =
+                        Number(person.similarity_percentage);
+
+                    const validPercentage =
+                        Number.isFinite(percentage)
+                        ? Math.max(0, Math.min(100, percentage))
+                        : 0;
+
+                    html += `
+
+                        <div class="result-card">
+
+                            <h4>
+                                <i class="fa-solid fa-circle-user"></i>
+                                &nbsp; ${name}
+                            </h4>
+
+                            <p>
+                                <strong>Email:</strong>
+                                ${email}
+                            </p>
+
+                            <p>
+                                <strong>Research Interests:</strong>
+                                ${interests}
+                            </p>
+
+                            <span class="match">
+
+                                <i class="fa-solid fa-chart-simple"></i>
+
+                                Research Interest Match:
+                                ${validPercentage.toFixed(2)}%
+
+                            </span>
+
+                        </div>
+
+                    `;
+
+                });
+
+                resultsDiv.innerHTML = html;
+
+            } catch(error) {
+
+                resultsDiv.innerHTML = "";
+
+                showMessage(
+                    "collaboratorMessage",
+                    error.message || "Something went wrong.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // OPENAI PAPER SUMMARIZATION
+
+        async function summarizePaper() {
+
+            const title =
+                document.getElementById("summaryTitle").value.trim();
+
+            const abstract =
+                document.getElementById("summaryAbstract").value.trim();
+
+            const resultsDiv =
+                document.getElementById("summaryResults");
+
+            const generateButton =
+                document.getElementById("generateSummaryButton");
+
+            clearMessage("summaryMessage");
+
+            resultsDiv.innerHTML = "";
+
+            if (!abstract) {
+
+                showMessage(
+                    "summaryMessage",
+                    "Please enter or select a research paper abstract.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            generateButton.disabled = true;
+
+            generateButton.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                &nbsp; Generating AI Summary...
+            `;
+
+            showMessage(
+                "summaryMessage",
+                "AI is analyzing your research paper. Please wait...",
+                "success"
+            );
+
+            try {
+
+                const response = await fetch(
+                    "/summarize-paper",
+                    {
+                        method: "POST",
+                        credentials: "same-origin",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            title: title,
+                            abstract: abstract
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail || "Unable to summarize this paper."
+                    );
+
+                }
+
+                clearMessage("summaryMessage");
+
+                resultsDiv.innerHTML = `
+
+                    <div class="summary-box">
+
+                        <h3>
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            &nbsp; AI Research Paper Summary
+                        </h3>
+
+                        <p class="summary-paper-title">
+                            ${escapeHTML(data.title || title)}
+                        </p>
+
+                        <p>${escapeHTML(data.summary || "Summary not available.")}</p>
+
+                    </div>
+
+                `;
+
+            } catch(error) {
+
+                resultsDiv.innerHTML = "";
+
+                showMessage(
+                    "summaryMessage",
+                    error.message || "Something went wrong.",
+                    "error"
+                );
+
+            } finally {
+
+                generateButton.disabled = false;
+
+                generateButton.innerHTML = `
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    &nbsp; Generate AI Summary
+                `;
+
+            }
+
+        }
+
+
+        // LOGOUT
+
+        async function logout() {
+
+            try {
+
+                const response = await fetch(
+                    "/logout",
+                    {
+                        method: "POST",
+                        credentials: "same-origin"
+                    }
+                );
+
+                if (response.ok) {
+
+                    window.location.href = "/";
+
+                } else {
+
+                    alert("Unable to logout. Please try again.");
+
+                }
+
+            } catch(error) {
+
+                alert("Something went wrong while logging out.");
+
+            }
+
+        }
+
+
+        // ENTER KEY SEARCH
+
+        document
+            .getElementById("paperQuery")
+            .addEventListener("keydown", function(event) {
+
+                if (event.key === "Enter") {
+
+                    searchPapers();
+
+                }
+
+            });
+
+
+        // SIDEBAR ACTIVE MENU
+
+        document.querySelectorAll(".nav-menu a").forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                document.querySelectorAll(".nav-menu a").forEach(function(item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                this.classList.add("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
