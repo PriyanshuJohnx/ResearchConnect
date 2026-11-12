@@ -16,13 +16,6 @@ from fastapi import (
 
 from starlette.middleware.sessions import SessionMiddleware
 
-from fastapi.responses import (
-    HTMLResponse,
-    RedirectResponse
-)
-
-from fastapi.templating import Jinja2Templates
-
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 
@@ -60,8 +53,6 @@ app.add_middleware(
     https_only=False
 )
 
-templates = Jinja2Templates(directory="templates")
-
 password_hash = PasswordHash.recommended()
 
 Base.metadata.create_all(bind=engine)
@@ -89,57 +80,6 @@ def reconstruct_abstract(abstract_index):
     )
 
     return abstract
-
-
-# ==========================================
-# HOMEPAGE
-# ==========================================
-
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={}
-    )
-
-
-# ==========================================
-# RESEARCHER REGISTRATION PAGE
-# ==========================================
-
-@app.get("/register", response_class=HTMLResponse)
-async def register_page(request: Request):
-
-    return templates.TemplateResponse(
-        request=request,
-        name="register.html",
-        context={}
-    )
-
-
-# ==========================================
-# PROTECTED DASHBOARD
-# ==========================================
-
-@app.get("/dashboard", response_class=HTMLResponse)
-async def dashboard(request: Request):
-
-    user_id = request.session.get("user_id")
-
-    if not user_id:
-
-        return RedirectResponse(
-            url="/",
-            status_code=303
-        )
-
-    return templates.TemplateResponse(
-        request=request,
-        name="dashboard.html",
-        context={}
-    )
 
 
 # ==========================================
@@ -268,6 +208,45 @@ def login(
         "message": "Login successful!",
         "researcher_id": user.id,
         "name": user.name
+    }
+
+
+# ==========================================
+# RESEARCHER PROFILE
+# GET LOGGED-IN RESEARCHER DETAILS
+# ==========================================
+
+@app.get("/profile")
+def get_profile(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Please login first"
+        )
+
+    user = db.query(models.User).filter(
+        models.User.id == user_id
+    ).first()
+
+    if not user:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Researcher not found"
+        )
+
+    return {
+        "id": user.id,
+        "name": user.name,
+        "email": user.email,
+        "research_interests": user.research_interests
     }
 
 
